@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zafeisn.github.io</id>
     <title>Gridea</title>
-    <updated>2020-11-01T00:59:42.992Z</updated>
+    <updated>2020-11-01T12:56:43.689Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zafeisn.github.io"/>
     <link rel="self" href="https://zafeisn.github.io/atom.xml"/>
@@ -10,6 +10,104 @@
     <logo>https://zafeisn.github.io/images/avatar.png</logo>
     <icon>https://zafeisn.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[DataFrame 数据保存和读取]]></title>
+        <id>https://zafeisn.github.io/post/dataframe-shu-ju-bao-cun-he-du-qu/</id>
+        <link href="https://zafeisn.github.io/post/dataframe-shu-ju-bao-cun-he-du-qu/">
+        </link>
+        <updated>2020-11-01T12:26:38.000Z</updated>
+        <content type="html"><![CDATA[<p>有如下四种方法：<br>
+• df.to_csv 写入到 csv 文件<br>
+• pd.read_csv 读取 csv 文件<br>
+• df.to_json 写入到 json 文件<br>
+• pd.read_json 读取 json 文件<br>
+• df.to_html 写入到 html 文件<br>
+• pd.read_html 读取 html 文件<br>
+• df.to_excel 写入到 excel 文件<br>
+• pd.read_excel 读取 excel 文件</p>
+<h1 id="写入csv">写入CSV</h1>
+<p>DataFrame.to_csv(path_or_buf=None, sep=', ', na_rep='', float_format=None, columns=None, header=True, index=True,<br>
+index_label=None, mode='w', encoding=None, compression=None, quoting=None, quotechar='&quot;',<br>
+line_terminator='\n', chunksize=None, tupleize_cols=None, date_format=None, doublequote=True,<br>
+escapechar=None, decimal='.')</p>
+<p>• path_or_buf : 文件路径，如果没有指定则将会直接返回字符串的 json<br>
+• sep : 输出文件的字段分隔符，默认为 “,”<br>
+• na_rep : 用于替换空数据的字符串，默认为''<br>
+• float_format : 设置浮点数的格式（几位小数点）<br>
+• columns : 要写的列<br>
+• header : 是否保存列名，默认为 True ，保存<br>
+• index : 是否保存索引，默认为 True ，保存<br>
+• index_label : 索引的列标签名</p>
+<h1 id="写入jason">写入Jason</h1>
+<p>DataFrame.to_json(path_or_buf=None, orient=None, date_format=None, double_precision=10, force_ascii=True,<br>
+date_unit='ms', default_handler=None, lines=False, compression=None, index=True)<br>
+• path_or_buf : 文件路径，如果没有指定则将会直接返回字符串的 json</p>
+<h1 id="写入html">写入HTML</h1>
+<p>DataFrame.to_html(buf=None, columns=None, col_space=None, header=True, index=True, na_rep='NaN', formatters=None,<br>
+float_format=None, sparsify=None, index_names=True, justify=None, bold_rows=True, classes=None,<br>
+escape=True, max_rows=None, max_cols=None, show_dimensions=False, notebook=False, decimal='.',<br>
+border=None, table_id=None)<br>
+df.to_html 生成的是一个 html 格式的 table 表，可以在前后加入其他标签，丰富页面<br>
+ps：如果有中文字符，需要在 head 中设置编码格式</p>
+<h1 id="写入excel">写入Excel</h1>
+<p>DataFrame.to_excel(excel_writer, sheet_name='Sheet1', na_rep='', float_format=None, columns=None,<br>
+header=True, index=True, index_label=None, startrow=0, startcol=0, engine=None,<br>
+merge_cells=True, encoding=None, inf_rep='inf', verbose=True, freeze_panes=None)</p>
+<h1 id="实例读取txt文本并写入csv文件保存">实例：读取TXT文本并写入CSV文件保存</h1>
+<pre><code># TXT文本路径 
+txt_path = r'D:/file/Jupyter/DATA1/2020-10-28/data/csma1.0.txt'
+
+# CSV文件保存路径 
+save_path = r'D:/file/Jupyter/DATA2/2020-10-28/test.csv'
+</code></pre>
+<h6 id="txt文本是9999行数据每行数据分为100列-本例中只用了一个文本实际为4个构成4分类">TXT文本是9999行数据，每行数据分为100列。本例中只用了一个文本，实际为4个，构成4分类</h6>
+<h6 id="目的生成train-test和validation-3个csv文件同时数据按比例-622-划分每个csv文件都有三列数据第一列为标签第二列和第三列为数据">目的：生成train、test和validation 3个CSV文件，同时数据按比例 6:2:2 划分，每个CSV文件都有三列数据，第一列为标签，第二列和第三列为数据</h6>
+<h6 id="划分提取前5000行train为前3000行test为后1000行validation为最后的1000行-同时偶行给第二列i奇行给第三列q">划分：提取前5000行，train为前3000行，test为后1000行，validation为最后的1000行。同时，偶行给第二列（I），奇行给第三列（Q）</h6>
+<h6 id="执行先读取txt文本然后选取行数再作奇偶判断最后to_csv写入">执行：先读取TXT文本，然后选取行数，再作奇偶判断，最后to_csv写入</h6>
+<h6 id="结果本例只实现读取和写入未进行数据划分三个csv文件">结果：本例只实现读取和写入，未进行数据划分三个CSV文件</h6>
+<pre><code>def load_data(txt_path):
+   # 偶序列-I 
+   even = []
+   # 奇序列-Q
+   odd = []
+   # 逐行读取TXT文本
+   f = open(txt_path, 'r', encoding='UTF-8')
+   contents = f.read().splitlines()
+   f.close()
+   
+   # 选取行数
+   lines = 5000 
+
+   # 遍历行数
+   for i in range(lines):
+       # 以逗号划分
+       for item in contents[i].split(','):
+           # 若为偶数，则添加到even偶数列表里
+           if i % 2 :
+               even.append(item)
+           # 反之，添加到odd奇数列表里
+           else:
+               odd.append(item)
+   # 返回奇偶列表
+   return even,odd
+
+# 生成I、Q两个列表
+I, Q = load_data(txt_path)
+
+# 添加标签列表
+num = 250000
+index_list = [0]*num
+
+import pandas as pd
+#字典中的key值即为csv中列名
+data = {'I':I,'Q':Q}
+#columns自定义列的索引值
+dataframe = pd.DataFrame(data, index=index_list)
+# a：末尾追写，header=False为不添加title
+dataframe.to_csv(save_path, mode='a', header=False)
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://zafeisn.github.io/post/hello-gridea/</id>
